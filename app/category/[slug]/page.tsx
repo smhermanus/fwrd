@@ -94,8 +94,20 @@ export default async function CategoryPage({ params, searchParams }: CategoryPag
         <div className="absolute inset-0 flex items-center justify-start px-60 mt-20">
           <div>
             <h1 className="text-4xl lg:text-6xl font-bold mb-4 text-white">
-              {firstWord}
-              {secondLine && <span className="font-light block">{` ${secondLine}`}</span>}
+              <span
+                className="block"
+                style={{ animation: 'fade-in-up 0.8s ease-out forwards', opacity: 0 }}
+              >
+                {firstWord}
+              </span>
+              {secondLine && (
+                <span
+                  className="font-light block"
+                  style={{ animation: 'fade-in-down 0.8s ease-out 0.15s forwards', opacity: 0 }}
+                >
+                  {secondLine}
+                </span>
+              )}
             </h1>
             <p className="text-base md:text-lg text-white/80 max-w-3xl">
               {category.description || `Explore our ${category.name.toLowerCase()} collection`}
