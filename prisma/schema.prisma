@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  image       String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  description String?
+  price       Float
+  image       String?
+  images      String?  // JSON string of image URLs array (NOT String[])
+  categoryId  String
+  category    Category @relation(fields: [categoryId], references: [id])
+  featured    Boolean  @default(false)
+  newArrival  Boolean  @default(false)
+  // Filters
+  color       String?
+  style       String?  // e.g., signature, baseball, fashion, leisure, sport, industrial, camo, kids, winter
+  fabric      String?  // e.g., cotton, polyester, mesh, wool
+  closure     String?  // e.g., snapback, strapback, velcro, fitted
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
